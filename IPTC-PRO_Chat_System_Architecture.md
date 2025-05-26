@@ -90,9 +90,6 @@ The IPTC-PRO chat system provides two main communication channels:
 
 ### Real-time Communication
 - **Pusher:** WebSocket service for real-time messaging
-  - **App ID:** 1075648
-  - **App Key:** b4d286b1fb0ea6a0db28
-  - **App Cluster:** eu
 - **Laravel Echo:** JavaScript library for WebSocket channel subscription
 
 ### File Storage & Media
