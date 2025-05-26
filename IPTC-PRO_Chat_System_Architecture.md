@@ -90,6 +90,9 @@ The IPTC-PRO chat system provides two main communication channels:
 
 ### Real-time Communication
 - **Pusher:** WebSocket service for real-time messaging
+  - **App ID:** 1075648
+  - **App Key:** b4d286b1fb0ea6a0db28
+  - **App Cluster:** eu
 - **Laravel Echo:** JavaScript library for WebSocket channel subscription
 
 ### File Storage & Media
@@ -208,87 +211,4 @@ IPTC-PRO/
 4. **Optimistic UI Updates**: Immediate message display before server confirmation
 5. **Unread Message Tracking**: Notification counters for new messages
 6. **Message Pagination**: Loading history in chunks for performance
-
-## Authentication Mechanism
-
-The chat system implements robust authentication:
-- CSRF token validation for all API requests
-- Laravel session-based authentication (`auth:web` middleware)
-- WebSocket authentication via Laravel Broadcasting
-- Permission checks to ensure users can only access their authorized conversations
-
-## Database Schema
-
-```
-┌─────────────────────┐      ┌───────────────────────┐
-│ ChatConversation    │      │ ChatMessage           │
-├─────────────────────┤      ├───────────────────────┤
-│ id                  │      │ id                    │
-│ conversation_type   │◀─────│ conversation_id       │
-│ course_id           │      │ message               │
-│ group_id            │      │ sender_id, sender_type│
-└─────────────────────┘      │ receiver_id, type     │
-         │                   │ attachment            │
-         │                   └───────────────────────┘
-         │
-         ▼
-┌─────────────────────┐
-│ ChatConversationPri.│
-├─────────────────────┤
-│ id                  │
-│ conversation_id     │
-│ student_id          │
-│ instructor_id       │
-└─────────────────────┘
-```
-
-## Project File Structure
-
-```
-IPTC-PRO/
-├── app/
-│   ├── Events/
-│   │   ├── ChatEvent.php               # Group chat broadcast event
-│   │   └── PrivateChatEvent.php        # Private chat broadcast event
-│   ├── Http/
-│   │   └── Controllers/
-│   │       └── Api/
-│   │           └── ChatController.php  # Handles all chat API endpoints
-│   ├── Models/
-│   │   ├── ChatConversation.php        # Main conversation model
-│   │   ├── ChatConversationPrivate.php # Private conversation details 
-│   │   └── ChatMessage.php             # Message model with polymorphic relations
-│   └── Notifications/
-│       └── ChatMessageNotification.php # Notification handler for messages
-├── database/
-│   └── migrations/
-│       ├── xxxx_create_chat_conversations_table.php
-│       ├── xxxx_create_chat_messages_table.php
-│       └── xxxx_create_chat_conversation_private_table.php
-├── config/
-│   ├── broadcasting.php              # WebSocket configuration
-│   └── filesystems.php               # Media storage configuration
-├── resources/
-│   ├── js/
-│   │   └── react/
-│   │       ├── components/
-│   │       │   └── course/
-│   │       │       ├── CourseChat.jsx      # Group chat component
-│   │       │       ├── PrivateChat.jsx     # Private chat component
-│   │       │       ├── chatUtils.js        # Shared utilities
-│   │       │       ├── course-chat.css     # Chat styling
-│   │       │       └── private-chat.css    # Private chat styling
-│   │       └── index.jsx                # React entry point
-│   └── views/
-│       └── Web/
-│           └── course/
-│               └── course-details.blade.php # Chat tab container
-├── routes/
-│   └── web-chat-api.php                # Chat API routes
-├── public/
-│   └── storage/                        # Public storage for message attachments
-├── package.json                        # NPM dependencies
-├── vite.config.js                      # Vite configuration for React
-└── composer.json                      # PHP dependencies
-```
 
